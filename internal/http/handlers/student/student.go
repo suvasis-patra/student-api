@@ -44,6 +44,7 @@ func New(storage storage.Storage) http.HandlerFunc {
 		)
 		if err != nil {
 			response.WriteJson(w, http.StatusInternalServerError, err)
+			return
 		}
 		response.WriteJson(w, http.StatusCreated, map[string]int64{"success": lastId})
 	}
@@ -63,5 +64,16 @@ func GetStudentById(storage storage.Storage) http.HandlerFunc {
 			return
 		}
 		response.WriteJson(w, http.StatusOK, student)
+	}
+}
+
+func GetAllStudents(storage storage.Storage)http.HandlerFunc{
+	return func(w http.ResponseWriter,r *http.Request){
+		students,err:=storage.GetStudents()
+		if err!=nil{
+			response.WriteJson(w,http.StatusBadRequest,response.GeneralError(err))
+			return
+		}
+		response.WriteJson(w,http.StatusOK,students)		
 	}
 }
