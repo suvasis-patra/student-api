@@ -30,6 +30,8 @@ func main() {
 	route.HandleFunc("POST /api/students", student.New(db))
 	route.HandleFunc("GET /api/student/{id}",student.GetStudentById(db))
 	route.HandleFunc("GET /api/students",student.GetAllStudents(db))
+	route.HandleFunc("PUT /api/student/{id}",student.UpdateStudentDetailsById(db))
+	route.HandleFunc("DELETE /api/student/{id}",student.DeleteStudentById(db))
 	// setup server
 	server := http.Server{
 		Addr:    cfg.Addr,
